@@ -42,19 +42,19 @@ function db() {
         created_at TEXT NOT NULL
     )");
 
-    $pdo->exec("CREATE TABLE IF NOT EXISTS products (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        sku TEXT NOT NULL UNIQUE,
-        product_name TEXT NOT NULL,
-        category_id INTEGER,
-        pet_type TEXT NOT NULL,
-        description TEXT,
-        price REAL NOT NULL DEFAULT 0,
-        stock_qty INTEGER NOT NULL DEFAULT 0,
-        status TEXT NOT NULL DEFAULT 'Active',
-        created_at TEXT NOT NULL,
-        FOREIGN KEY(category_id) REFERENCES categories(id)
-    )");
+   $pdo->exec("CREATE TABLE IF NOT EXISTS products (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    sku TEXT NOT NULL UNIQUE,
+    product_name TEXT NOT NULL,
+    category_id INTEGER,
+    pet_type TEXT NOT NULL,
+    description TEXT,
+    price REAL NOT NULL DEFAULT 0,
+    stock_qty INTEGER NOT NULL DEFAULT 0,
+    status TEXT NOT NULL DEFAULT 'Active',
+    created_at TEXT NOT NULL,
+    FOREIGN KEY(category_id) REFERENCES categories(id)
+)");
     $pdo->exec("CREATE TABLE IF NOT EXISTS orders (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         order_no TEXT NOT NULL UNIQUE,
@@ -185,8 +185,15 @@ try {
     }
 
     if ($action === 'list_categories') ok(['categories' => $pdo->query("SELECT * FROM categories ORDER BY category_name")->fetchAll(PDO::FETCH_ASSOC)]);
-    if ($action === 'list_suppliers') ok(['suppliers' => $pdo->query("SELECT * FROM suppliers ORDER BY supplier_name")->fetchAll(PDO::FETCH_ASSOC)]);
-
+    $pdo->exec("CREATE TABLE IF NOT EXISTS suppliers (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    supplier_name TEXT NOT NULL,
+    contact_person TEXT,
+    phone TEXT,
+    email TEXT,
+    address TEXT,
+    created_at TEXT NOT NULL
+    )");
     if ($action === 'list_customers') {
         $stmt = $pdo->prepare("SELECT id,name,email,contact,address,status,created_at FROM users WHERE role='customer' ORDER BY id DESC");
         $stmt->execute(); ok(['customers' => $stmt->fetchAll(PDO::FETCH_ASSOC)]);
