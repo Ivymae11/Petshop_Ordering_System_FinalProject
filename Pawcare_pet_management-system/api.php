@@ -201,6 +201,7 @@ try {
     address TEXT,
     created_at TEXT NOT NULL
     )");
+
     if ($action === 'list_customers') {
         $stmt = $pdo->prepare("SELECT id,name,email,contact,address,status,created_at FROM users WHERE role='customer' ORDER BY id DESC");
         $stmt->execute(); ok(['customers' => $stmt->fetchAll(PDO::FETCH_ASSOC)]);
