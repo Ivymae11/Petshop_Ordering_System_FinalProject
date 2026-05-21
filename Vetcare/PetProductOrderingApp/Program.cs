@@ -228,26 +228,45 @@ namespace PetProductOrderingApp
 
         private void ConfigureGrid(DataGridView g)
         {
-            g.AllowUserToAddRows=false;
-            g.AllowUserToDeleteRows=false;
-            g.ReadOnly=true;
-            g.RowHeadersVisible=false;
-            g.SelectionMode=DataGridViewSelectionMode.FullRowSelect;
-            g.MultiSelect=false;
-            g.AutoSizeColumnsMode=DataGridViewAutoSizeColumnsMode.Fill;
-            g.BackgroundColor=Color.White;
-            g.BorderStyle=BorderStyle.FixedSingle;
-            g.EnableHeadersVisualStyles=false;
-            g.ColumnHeadersDefaultCellStyle.BackColor=Color.FromArgb(240,234,255);
-            g.ColumnHeadersDefaultCellStyle.ForeColor=Color.FromArgb(33,27,50);
-            g.ColumnHeadersDefaultCellStyle.Font=new Font("Segoe UI",8,FontStyle.Bold);
-            g.DefaultCellStyle.BackColor=Color.White;
-            g.AlternatingRowsDefaultCellStyle.BackColor=Color.FromArgb(250,248,255);
-            g.DefaultCellStyle.ForeColor=Color.FromArgb(33,27,50);
-            g.DefaultCellStyle.SelectionBackColor=Color.FromArgb(139,110,232);
-            g.DefaultCellStyle.SelectionForeColor=Color.White;
-            g.DefaultCellStyle.Font=new Font("Segoe UI",8);
-            g.RowTemplate.Height=25;
+            g.AutoGenerateColumns = false;
+            g.AllowUserToAddRows = false;
+            g.AllowUserToDeleteRows = false;
+            g.ReadOnly = true;
+            g.RowHeadersVisible = false;
+            g.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            g.MultiSelect = false;
+            g.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            g.BackgroundColor = Color.White;
+            g.BorderStyle = BorderStyle.FixedSingle;
+            g.EnableHeadersVisualStyles = false;
+
+            g.ColumnHeadersDefaultCellStyle.BackColor =
+                Color.FromArgb(240, 234, 255);
+
+            g.ColumnHeadersDefaultCellStyle.ForeColor =
+                Color.FromArgb(33, 27, 50);
+
+            g.ColumnHeadersDefaultCellStyle.Font =
+                new Font("Segoe UI", 8, FontStyle.Bold);
+
+            g.DefaultCellStyle.BackColor = Color.White;
+
+            g.AlternatingRowsDefaultCellStyle.BackColor =
+                Color.FromArgb(250, 248, 255);
+
+            g.DefaultCellStyle.ForeColor =
+                Color.FromArgb(33, 27, 50);
+
+            g.DefaultCellStyle.SelectionBackColor =
+                Color.FromArgb(139, 110, 232);
+
+            g.DefaultCellStyle.SelectionForeColor =
+                Color.White;
+
+            g.DefaultCellStyle.Font =
+                new Font("Segoe UI", 8);
+
+            g.RowTemplate.Height = 25;
         }
         private Dictionary<string,object> GetApi(string q){ using(WebClient c=new WebClient()){ string r=c.DownloadString(apiUrl+"?"+q); return json.Deserialize<Dictionary<string,object>>(r); } }
         private string PostApi(Dictionary<string,string> data){ using(WebClient c=new WebClient()){ c.Headers[HttpRequestHeader.ContentType]="application/x-www-form-urlencoded"; List<string> parts=new List<string>(); foreach(KeyValuePair<string,string> i in data) parts.Add(Uri.EscapeDataString(i.Key)+"="+Uri.EscapeDataString(i.Value)); try{return c.UploadString(apiUrl,"POST",string.Join("&",parts.ToArray()));}catch(WebException ex){throw new Exception(ReadError(ex));}}}
