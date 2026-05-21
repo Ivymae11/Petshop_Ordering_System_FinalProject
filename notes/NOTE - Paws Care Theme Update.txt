@@ -1,0 +1,27 @@
+PAWS & CARE THEME UPDATE
+
+The system was restyled using the uploaded Paws & Care pet dashboard image as the visual guide.
+
+Changed:
+- PHP admin login uses a soft white/purple pet-care theme.
+- PHP dashboard uses a bright rounded pet-care layout.
+- PHP cards, tables, forms, buttons, badges, and navigation were restyled.
+- C# customer login uses matching purple/white styling.
+- C# ordering workspace uses matching soft purple accents and readable grids.
+
+Not changed:
+- SQLite database
+- PHP API logic
+- Product/order/cart logic
+- Customer registration/login logic
+- Admin CRUD logic
+- How the system runs
+
+Run PHP inside php-api:
+php -S localhost:8000
+
+Open PHP:
+http://localhost:8000/index.php
+
+Open C#:
+csharp\PetProductOrderingApp.sln

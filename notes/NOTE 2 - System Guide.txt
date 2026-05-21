@@ -1,0 +1,14 @@
+SYSTEM GUIDE
+
+PHP is the Pet Shop Management System.
+It manages products, categories, suppliers, customers, orders, stock, and payment/order status.
+
+C# is the Pet Product Ordering System.
+It allows customers to login, register, view products, add items to cart, checkout, view order history, and cancel allowed orders.
+
+Connection flow:
+C# Ordering System -> PHP API -> SQLite Database
+PHP Admin System -> SQLite Database
+
+When products are added or updated in PHP, they appear in the C# product catalog.
+When a customer submits an order in C#, the order appears in the PHP admin order counter.

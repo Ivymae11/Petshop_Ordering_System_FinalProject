@@ -1,0 +1,27 @@
+HOW TO RUN
+
+1. Extract the ZIP.
+2. Open the php-api folder.
+3. Run:
+   php -S localhost:8000
+
+If php is not found:
+   /c/xampp/php/php.exe -S localhost:8000
+
+4. Open the PHP admin system:
+   http://localhost:8000/index.php
+
+5. Admin login:
+   admin@petshop.test
+   admin123
+
+6. Open Visual Studio.
+7. Open:
+   csharp\PetProductOrderingApp.sln
+
+8. Build > Rebuild Solution.
+9. Press F5.
+
+10. Customer login:
+   customer@petshop.test
+   customer123

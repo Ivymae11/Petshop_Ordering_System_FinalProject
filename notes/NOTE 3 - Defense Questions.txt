@@ -1,0 +1,25 @@
+DEFENSE QUESTIONS
+
+1. What is the purpose of this system pair?
+The PHP system manages the pet shop while the C# system allows customers to order pet products.
+
+2. What database is used?
+SQLite.
+
+3. How are the systems connected?
+The C# app sends HTTP requests to api.php, and api.php reads and writes the SQLite database.
+
+4. What can the admin do?
+Manage products, categories, suppliers, customers, orders, stock, and statuses.
+
+5. What can the customer do?
+Login, register, browse products, add to cart, checkout, view orders, and cancel allowed orders.
+
+6. Why is stock validation needed?
+It prevents customers from ordering more than the available stock.
+
+7. What happens after checkout?
+The order is saved, stock is deducted, and the order appears in the PHP admin system.
+
+8. Why is the C# form fixed-size?
+To keep buttons, tables, dropdowns, and textboxes consistently visible.
