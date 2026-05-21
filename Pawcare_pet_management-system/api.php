@@ -104,11 +104,15 @@ function db() {
 
     if ((int)$pdo->query("SELECT COUNT(*) FROM suppliers")->fetchColumn() === 0) {
 
-    $stmt = $pdo->prepare("
-    INSERT INTO suppliers
-    (supplier_name, contact_person, contact, address, status, created_at)
-    VALUES (?, ?, ?, ?, ?, ?)
-    ");
+    $pdo->exec("CREATE TABLE IF NOT EXISTS suppliers (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    supplier_name TEXT NOT NULL,
+    contact_person TEXT,
+    contact TEXT,
+    address TEXT,
+    status TEXT NOT NULL DEFAULT 'Active',
+    created_at TEXT NOT NULL
+    )");
 
     $stmt->execute([
         'Pawline Distribution',
