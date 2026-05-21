@@ -86,7 +86,7 @@ function db() {
     )");
 
     if ((int)$pdo->query("SELECT COUNT(*) FROM users")->fetchColumn() === 0) {
-        $stmt = $pdo->prepare("INSERT INTO users(name,email,password,role,contact,address,status,created_at) VALUES(?,?,?,?,?,?,?,?)");
+        $stmt = $pdo->prepare("SELECT * FROM users WHERE email=? AND role=? AND status='Active'LIMIT 1");
         $stmt->execute(['Pet Shop Administrator','admin@petshop.test','admin123','admin','09170000001','Pawventory Main Branch','Active',date('Y-m-d H:i:s')]);
         $stmt->execute(['Mia Pet Owner','customer@petshop.test','customer123','customer','09170000002','Quezon City','Active',date('Y-m-d H:i:s')]);
     }
