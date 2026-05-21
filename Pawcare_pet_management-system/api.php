@@ -136,7 +136,18 @@ try {
         $password = trim($_POST['password'] ?? '');
         $role = trim($_POST['role'] ?? '');
         if ($email === '' || $password === '' || $role === '') fail('Email, password, and role are required.');
-        $stmt = $pdo->prepare("SELECT * FROM users WHERE email=? AND password=? AND role=? AND status='Active' LIMIT 1");
+        $stmt = $pdo->prepare("
+        SELECT * FROM users
+        WHERE email=? AND role=? AND status='Active'
+        LIMIT 1
+        ");
+
+        $stmt->execute([$email, $role]);
+        $user = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if (!$user || !password_verify($password, $user['password'])) {
+            fail('Invalid login details.');
+        }
         $stmt->execute([$email,$password,$role]);
         $user = $stmt->fetch(PDO::FETCH_ASSOC);
         if (!$user) fail('Invalid login details.');
@@ -156,7 +167,22 @@ try {
         $stmt->execute([$email]);
         if ($stmt->fetch()) fail('Email is already registered.');
         $stmt = $pdo->prepare("INSERT INTO users(name,email,password,role,contact,address,status,created_at) VALUES(?,?,?,?,?,?,?,?)");
-        $stmt->execute([$name,$email,$password,'customer',$contact,$address,'Active',date('Y-m-d H:i:s')]);
+        $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+        $stmt = $pdo->prepare("
+        INSERT INTO users(name,email,password,role,contact,address,status,created_at)
+        VALUES(?,?,?,?,?,?,?,?)
+        ");
+
+        $stmt->execute([
+            $name,
+            $email,
+            $hashedPassword,
+            'customer',
+            $contact,
+            $address,
+            'Active',
+            date('Y-m-d H:i:s')
+        ]);
         ok(['message' => 'Customer account created.']);
     }
 
