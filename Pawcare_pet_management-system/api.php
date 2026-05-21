@@ -42,19 +42,23 @@ function db() {
         created_at TEXT NOT NULL
     )");
 
-   $pdo->exec("CREATE TABLE IF NOT EXISTS products (
+    $pdo->exec("CREATE TABLE IF NOT EXISTS products (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     sku TEXT NOT NULL UNIQUE,
     product_name TEXT NOT NULL,
     category_id INTEGER,
+    supplier_id INTEGER,
     pet_type TEXT NOT NULL,
     description TEXT,
     price REAL NOT NULL DEFAULT 0,
     stock_qty INTEGER NOT NULL DEFAULT 0,
+    reorder_level INTEGER NOT NULL DEFAULT 0,
     status TEXT NOT NULL DEFAULT 'Active',
     created_at TEXT NOT NULL,
-    FOREIGN KEY(category_id) REFERENCES categories(id)
-)");
+    FOREIGN KEY(category_id) REFERENCES categories(id),
+    FOREIGN KEY(supplier_id) REFERENCES suppliers(id)
+    )");
+    
     $pdo->exec("CREATE TABLE IF NOT EXISTS orders (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         order_no TEXT NOT NULL UNIQUE,
