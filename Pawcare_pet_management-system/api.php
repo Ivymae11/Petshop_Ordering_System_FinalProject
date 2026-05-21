@@ -26,6 +26,7 @@ function db() {
     status TEXT NOT NULL DEFAULT 'Active',
     created_at TEXT NOT NULL
     )");
+
     $pdo->exec("CREATE TABLE IF NOT EXISTS categories (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         category_name TEXT NOT NULL UNIQUE,
@@ -102,10 +103,39 @@ function db() {
     }
 
     if ((int)$pdo->query("SELECT COUNT(*) FROM suppliers")->fetchColumn() === 0) {
-        $stmt = $pdo->prepare("INSERT INTO suppliers(supplier_name,contact_person,contact,address,status,created_at) VALUES(?,?,?,?,?,?)");
-        $stmt->execute(['Pawline Distribution','Lara Cruz','09181230001','Makati City','Active',date('Y-m-d H:i:s')]);
-        $stmt->execute(['Furry Basket Trading','Mark Reyes','09181230002','Pasig City','Active',date('Y-m-d H:i:s')]);
-        $stmt->execute(['Tail & Whisker Supply','Nina Santos','09181230003','Manila City','Active',date('Y-m-d H:i:s')]);
+
+    $stmt = $pdo->prepare("
+    INSERT INTO suppliers
+    (supplier_name, contact_person, contact, address, status, created_at)
+    VALUES (?, ?, ?, ?, ?, ?)
+    ");
+
+    $stmt->execute([
+        'Pawline Distribution',
+        'Lara Cruz',
+        '09181230001',
+        'Makati City',
+        'Active',
+        date('Y-m-d H:i:s')
+    ]);
+
+    $stmt->execute([
+        'Furry Basket Trading',
+        'Mark Reyes',
+        '09181230002',
+        'Pasig City',
+        'Active',
+        date('Y-m-d H:i:s')
+    ]);
+
+    $stmt->execute([
+        'Tail & Whisker Supply',
+        'Nina Santos',
+        '09181230003',
+        'Manila City',
+        'Active',
+        date('Y-m-d H:i:s')
+    ]);
     }
 
     if ((int)$pdo->query("SELECT COUNT(*) FROM products")->fetchColumn() === 0) {
