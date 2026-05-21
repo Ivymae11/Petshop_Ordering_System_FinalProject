@@ -130,7 +130,12 @@ try {
     if ($action === 'ping') ok(['message' => 'Pawventory API is running']);
 
     if ($action === 'login') {
-        $email = strtolower(trim($_POST['email'] ?? ''));
+
+    if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+        fail('POST request required.', 405);
+    }
+
+    $email = strtolower(trim($_POST['email'] ?? ''));
         $password = trim($_POST['password'] ?? '');
         $role = trim($_POST['role'] ?? '');
         if ($email === '' || $password === '' || $role === '') fail('Email, password, and role are required.');
