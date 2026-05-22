@@ -228,7 +228,6 @@ namespace PetProductOrderingApp
 
         private void ConfigureGrid(DataGridView g)
         {
-            g.AutoGenerateColumns = false;
             g.AllowUserToAddRows = false;
             g.AllowUserToDeleteRows = false;
             g.ReadOnly = true;
@@ -268,6 +267,7 @@ namespace PetProductOrderingApp
 
             g.RowTemplate.Height = 25;
         }
+
         private Dictionary<string,object> GetApi(string q){ using(WebClient c=new WebClient()){ string r=c.DownloadString(apiUrl+"?"+q); return json.Deserialize<Dictionary<string,object>>(r); } }
         private string PostApi(Dictionary<string,string> data){ using(WebClient c=new WebClient()){ c.Headers[HttpRequestHeader.ContentType]="application/x-www-form-urlencoded"; List<string> parts=new List<string>(); foreach(KeyValuePair<string,string> i in data) parts.Add(Uri.EscapeDataString(i.Key)+"="+Uri.EscapeDataString(i.Value)); try{return c.UploadString(apiUrl,"POST",string.Join("&",parts.ToArray()));}catch(WebException ex){throw new Exception(ReadError(ex));}}}
         private string ReadError(WebException ex){ try{ if(ex.Response!=null){ using(Stream s=ex.Response.GetResponseStream()) using(StreamReader r=new StreamReader(s)){ string body=r.ReadToEnd(); Dictionary<string,object> d=json.Deserialize<Dictionary<string,object>>(body); if(d!=null && d.ContainsKey("message")) return Convert.ToString(d["message"]); return body; } } }catch{} return ex.Message; }
