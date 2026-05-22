@@ -95,7 +95,7 @@ function db() {
     }
 
     if ((int)$pdo->query("SELECT COUNT(*) FROM categories")->fetchColumn() === 0) {
-        $stmt = $pdo->prepare("INSERT INTO categories(category_name,description,status,created_at) VALUES(?,?,?,?)");
+        $stmt = $pdo->prepare("INSERT INTO categories( category_name, description,status, created_at) VALUES (?, ?, ?, ?)");
         $stmt->execute(['Nutrition','Daily meals, treats, and supplements','Active',date('Y-m-d H:i:s')]);
         $stmt->execute(['Grooming Care','Shampoo, brushes, coat and hygiene products','Active',date('Y-m-d H:i:s')]);
         $stmt->execute(['Play and Comfort','Toys, beds, collars, carriers, and bowls','Active',date('Y-m-d H:i:s')]);
@@ -224,11 +224,7 @@ try {
         ok(['message' => 'Customer account created.']);
     }
 
-    $stmt = $pdo->prepare("
-SELECT * FROM users
-WHERE email=? AND role=? AND status='Active'
-LIMIT 1
-");
+    $stmt = $pdo->prepare("SELECT * FROM users WHERE email=? AND role=? AND status='Active'LIMIT 1");
 
 $stmt->execute([$email, $role]);
 
